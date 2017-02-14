@@ -11,7 +11,7 @@
  */
 
 &ufsphy_mem {
-	compatible = "qcom,ufs-phy-qrbtc-msmskunk";
+	compatible = "qcom,ufs-phy-qrbtc-sdm845";
 
 	vdda-phy-supply = <&pm8998_l1>;
 	vdda-pll-supply = <&pm8998_l2>;
@@ -64,7 +64,7 @@
 };
 
 &ufsphy_card {
-	compatible = "qcom,ufs-phy-qrbtc-msmskunk";
+	compatible = "qcom,ufs-phy-qrbtc-sdm845";
 
 	vdda-phy-supply = <&pm8998_l1>; /* 0.88v */
 	vdda-pll-supply = <&pm8998_l26>; /* 1.2v */

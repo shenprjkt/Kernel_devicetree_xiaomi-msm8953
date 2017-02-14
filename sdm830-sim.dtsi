@@ -13,21 +13,8 @@
 /*
  * As a general rule, only version-specific property overrides should be placed
  * inside this file. Common device definitions should be placed inside the
- * msmskunk.dtsi file.
+ * sdm845-sim.dtsi file.
  */
 
- #include "msmskunk.dtsi"
-
-/ {
-	model = "Qualcomm Technologies, Inc. SDM BAT";
-	compatible = "qcom,sdmbat";
-	qcom,msm-id = <328 0x0>;
-
-};
-
-&soc {
-	qcom,llcc@1300000 {
-		status = "disabled";
-	};
-};
+ #include "sdm845-sim.dtsi"
 

@@ -11,7 +11,7 @@
  * GNU General Public License for more details.
  */
 
-#include <dt-bindings/clock/qcom,gcc-skunk.h>
+#include <dt-bindings/clock/qcom,gcc-sdm845.h>
 &soc {
 	usb3: ssusb@a600000 {
 		compatible = "qcom,dwc-usb3-msm";

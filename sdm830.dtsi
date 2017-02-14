@@ -10,14 +10,24 @@
  * GNU General Public License for more details.
  */
 
+/*
+ * As a general rule, only version-specific property overrides should be placed
+ * inside this file. Common device definitions should be placed inside the
+ * sdm845.dtsi file.
+ */
 
-/dts-v1/;
-
-#include "sdmbat.dtsi"
-#include "sdmbat-mtp.dtsi"
+ #include "sdm845.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. SDM bat v1 MTP";
-	compatible = "qcom,sdmbat-mtp", "qcom,sdmbat", "qcom,mtp";
-	qcom,board-id = <8 0>;
+	model = "Qualcomm Technologies, Inc. SDM830";
+	compatible = "qcom,sdm830";
+	qcom,msm-id = <328 0x0>;
+
 };
+
+&soc {
+	qcom,llcc@1300000 {
+		status = "disabled";
+	};
+};
+

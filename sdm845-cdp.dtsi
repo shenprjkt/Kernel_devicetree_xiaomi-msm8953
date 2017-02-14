@@ -10,11 +10,5 @@
  * GNU General Public License for more details.
  */
 
-/*
- * As a general rule, only version-specific property overrides should be placed
- * inside this file. Common device definitions should be placed inside the
- * msmskunk-rumi.dtsi file.
- */
-
- #include "msmskunk-rumi.dtsi"
+#include "sdm845-pinctrl.dtsi"
 

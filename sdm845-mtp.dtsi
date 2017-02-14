@@ -10,16 +10,5 @@
  * GNU General Public License for more details.
  */
 
-
-/dts-v1/;
-/memreserve/ 0x90000000 0x00000100;
-
-#include "sdmbat.dtsi"
-#include "sdmbat-sim.dtsi"
-
-/ {
-	model = "Qualcomm Technologies, Inc. SDM BAT SIM";
-	compatible = "qcom,sdmbat-sim", "qcom,sdmbat", "qcom,sim";
-	qcom,board-id = <16 0>;
-};
+#include "sdm845-pinctrl.dtsi"
 

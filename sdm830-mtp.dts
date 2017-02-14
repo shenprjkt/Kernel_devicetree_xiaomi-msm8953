@@ -10,5 +10,14 @@
  * GNU General Public License for more details.
  */
 
-#include "msmskunk-pinctrl.dtsi"
 
+/dts-v1/;
+
+#include "sdm830.dtsi"
+#include "sdm830-mtp.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. SDM bat v1 MTP";
+	compatible = "qcom,sdm830-mtp", "qcom,sdm830", "qcom,mtp";
+	qcom,board-id = <8 0>;
+};

@@ -10,5 +10,16 @@
  * GNU General Public License for more details.
  */
 
-#include "msmskunk-pinctrl.dtsi"
+
+/dts-v1/;
+/memreserve/ 0x90000000 0x00000100;
+
+#include "sdm830.dtsi"
+#include "sdm830-sim.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. SDM830 SIM";
+	compatible = "qcom,sdm830-sim", "qcom,sdm830", "qcom,sim";
+	qcom,board-id = <16 0>;
+};
 

@@ -13,11 +13,11 @@
 
 /dts-v1/;
 
-#include "sdmbat.dtsi"
-#include "sdmbat-cdp.dtsi"
+#include "sdm845.dtsi"
+#include "sdm845-mtp.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. SDM bat v1 CDP";
-	compatible = "qcom,sdmbat-cdp", "qcom,sdmbat", "qcom,cdp";
-	qcom,board-id = <1 0>;
+	model = "Qualcomm Technologies, Inc. MSM sdm845 v1 MTP";
+	compatible = "qcom,sdm845-mtp", "qcom,sdm845", "qcom,mtp";
+	qcom,board-id = <8 0>;
 };

@@ -11,19 +11,19 @@
  */
 
 #include "skeleton64.dtsi"
-#include <dt-bindings/clock/qcom,gcc-skunk.h>
-#include <dt-bindings/clock/qcom,camcc-skunk.h>
-#include <dt-bindings/clock/qcom,dispcc-skunk.h>
-#include <dt-bindings/clock/qcom,gpucc-skunk.h>
-#include <dt-bindings/clock/qcom,videocc-skunk.h>
-#include <dt-bindings/clock/qcom,cpucc-skunk.h>
+#include <dt-bindings/clock/qcom,gcc-sdm845.h>
+#include <dt-bindings/clock/qcom,camcc-sdm845.h>
+#include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+#include <dt-bindings/clock/qcom,gpucc-sdm845.h>
+#include <dt-bindings/clock/qcom,videocc-sdm845.h>
+#include <dt-bindings/clock/qcom,cpucc-sdm845.h>
 #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/soc/qcom,tcs-mbox.h>
 
 / {
-	model = "Qualcomm Technologies, Inc. MSM SKUNK";
-	compatible = "qcom,msmskunk";
+	model = "Qualcomm Technologies, Inc. SDM845";
+	compatible = "qcom,sdm845";
 	qcom,msm-id = <321 0x0>;
 	interrupt-parent = <&intc>;
 
@@ -376,9 +376,9 @@
 	};
 };
 
-#include "msm-gdsc-skunk.dtsi"
-#include "msmskunk-sde.dtsi"
-#include "msmskunk-sde-display.dtsi"
+#include "msm-gdsc-sdm845.dtsi"
+#include "sdm845-sde.dtsi"
+#include "sdm845-sde-display.dtsi"
 
 &soc {
 	#address-cells = <1>;
@@ -466,7 +466,7 @@
 	};
 
 	clock_gcc: qcom,gcc@100000 {
-		compatible = "qcom,gcc-msmskunk";
+		compatible = "qcom,gcc-sdm845";
 		reg = <0x100000 0x1f0000>;
 		reg-names = "cc_base";
 		vdd_cx-supply = <&pm8998_s9_level>;
@@ -476,7 +476,7 @@
 	};
 
 	clock_videocc: qcom,videocc@ab00000 {
-		compatible = "qcom,video_cc-msmskunk";
+		compatible = "qcom,video_cc-sdm845";
 		reg = <0xab00000 0x10000>;
 		reg-names = "cc_base";
 		vdd_cx-supply = <&pm8998_s9_level>;
@@ -1075,8 +1075,8 @@
 		reg = <0x1300000 0x50000>;
 		reg-names = "llcc_base";
 
-		llcc: qcom,msmskunk-llcc {
-			compatible = "qcom,msmskunk-llcc";
+		llcc: qcom,sdm845-llcc {
+			compatible = "qcom,sdm845-llcc";
 			#cache-cells = <1>;
 			max-slices = <32>;
 			qcom,dump-size = <0x3c0000>;
@@ -1612,10 +1612,10 @@
 	status = "ok";
 };
 
-#include "msmskunk-regulator.dtsi"
-#include "msmskunk-coresight.dtsi"
-#include "msm-arm-smmu-skunk.dtsi"
-#include "msmskunk-ion.dtsi"
-#include "msmskunk-smp2p.dtsi"
-#include "msmskunk-camera.dtsi"
-#include "msmskunk-bus.dtsi"
+#include "sdm845-regulator.dtsi"
+#include "sdm845-coresight.dtsi"
+#include "msm-arm-smmu-sdm845.dtsi"
+#include "sdm845-ion.dtsi"
+#include "sdm845-smp2p.dtsi"
+#include "sdm845-camera.dtsi"
+#include "sdm845-bus.dtsi"

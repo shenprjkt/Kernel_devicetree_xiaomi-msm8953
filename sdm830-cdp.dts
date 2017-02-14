@@ -12,13 +12,12 @@
 
 
 /dts-v1/;
-/memreserve/ 0x90000000 0x00000100;
 
-#include "msmskunk.dtsi"
-#include "msmskunk-sim.dtsi"
+#include "sdm830.dtsi"
+#include "sdm830-cdp.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. MSM SKUNK SIM";
-	compatible = "qcom,msmskunk-sim", "qcom,msmskunk", "qcom,sim";
-	qcom,board-id = <16 0>;
+	model = "Qualcomm Technologies, Inc. SDM bat v1 CDP";
+	compatible = "qcom,sdm830-cdp", "qcom,sdm830", "qcom,cdp";
+	qcom,board-id = <1 0>;
 };

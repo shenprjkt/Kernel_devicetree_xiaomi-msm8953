@@ -14,12 +14,12 @@
 /dts-v1/;
 /memreserve/ 0x90000000 0x00000100;
 
-#include "msmskunk.dtsi"
-#include "msmskunk-rumi.dtsi"
-#include "msmskunk-usb.dtsi"
+#include "sdm845.dtsi"
+#include "sdm845-rumi.dtsi"
+#include "sdm845-usb.dtsi"
 / {
-	model = "Qualcomm Technologies, Inc. MSM SKUNK RUMI";
-	compatible = "qcom,msmskunk-rumi", "qcom,msmskunk", "qcom,rumi";
+	model = "Qualcomm Technologies, Inc. SDM845 RUMI";
+	compatible = "qcom,sdm845-rumi", "qcom,sdm845", "qcom,rumi";
 	qcom,board-id = <15 0>;
 };
 
