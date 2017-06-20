@@ -10,19 +10,14 @@
  * GNU General Public License for more details.
  */
 
+
 /dts-v1/;
-/plugin/;
 
-#include <dt-bindings/clock/qcom,gcc-sdm845.h>
-#include <dt-bindings/clock/qcom,camcc-sdm845.h>
-#include <dt-bindings/clock/qcom,rpmh.h>
-#include <dt-bindings/interrupt-controller/arm-gic.h>
-
-#include "sdm845-cdp.dtsi"
+#include "sdm845-v2.dtsi"
+#include "sdm845-qrd.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. SDM845 v1 CDP";
-	compatible = "qcom,sdm845-cdp", "qcom,sdm845", "qcom,cdp";
-	qcom,msm-id = <321 0x0>;
-	qcom,board-id = <1 0>;
+	model = "Qualcomm Technologies, Inc. SDM845 V2 QRD";
+	compatible = "qcom,sdm845-qrd", "qcom,sdm845", "qcom,qrd";
+	qcom,board-id = <11 0>;
 };
