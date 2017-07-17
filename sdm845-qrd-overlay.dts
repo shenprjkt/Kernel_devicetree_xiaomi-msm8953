@@ -18,12 +18,12 @@
 #include <dt-bindings/clock/qcom,rpmh.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 
-#include "sdm845-cdp.dtsi"
-#include "sdm845-cdp-audio-overlay.dtsi"
+#include "sdm845-qrd.dtsi"
+#include "sdm845-qrd-audio-overlay.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. SDM845 v1 CDP";
-	compatible = "qcom,sdm845-cdp", "qcom,sdm845", "qcom,cdp";
+	model = "Qualcomm Technologies, Inc. SDM845 v1 QRD";
+	compatible = "qcom,sdm845-qrd", "qcom,sdm845", "qcom,qrd";
 	qcom,msm-id = <321 0x0>;
-	qcom,board-id = <1 0>;
+	qcom,board-id = <11 0>;
 };

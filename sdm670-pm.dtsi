@@ -1,4 +1,4 @@
-/* Copyright (c) 2016-2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -9,20 +9,18 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
-#include <dt-bindings/interrupt-controller/arm-gic.h>
 
 &soc {
 	qcom,lpm-levels {
 		compatible = "qcom,lpm-levels";
-		qcom,use-psci;
 		#address-cells = <1>;
 		#size-cells = <0>;
+
 		qcom,pm-cluster@0 {
 			reg = <0>;
 			#address-cells = <1>;
 			#size-cells = <0>;
 			label = "L3";
-			qcom,spm-device-names = "L3";
 			qcom,psci-mode-shift = <4>;
 			qcom,psci-mode-mask = <0xfff>;
 
@@ -51,7 +49,7 @@
 				reg = <2>;
 				label = "l3-pc";
 				qcom,psci-mode = <0x4>;
-				qcom,latency-us = <4562>;
+				qcom,latency-us = <3201>;
 				qcom,ss-power = <408>;
 				qcom,energy-overhead = <2421840>;
 				qcom,time-overhead = <5376>;
@@ -72,7 +70,7 @@
 				qcom,notify-rpm;
 			};
 
-			qcom,pm-cluster-level@4 { /* LLCC off, AOSS sleep */
+			qcom,pm-cluster-level@4 { /* AOSS sleep */
 				reg = <4>;
 				label = "llcc-off";
 				qcom,psci-mode = <0xC24>;
@@ -84,12 +82,14 @@
 				qcom,is-reset;
 				qcom,notify-rpm;
 			};
+
 			qcom,pm-cpu@0 {
 				#address-cells = <1>;
 				#size-cells = <0>;
 				qcom,psci-mode-shift = <0>;
 				qcom,psci-mode-mask = <0xf>;
-				qcom,cpu = <&CPU0 &CPU1 &CPU2 &CPU3>;
+				qcom,cpu = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4
+									&CPU5>;
 
 				qcom,pm-cpu-level@0 { /* C1 */
 					reg = <0>;
@@ -103,9 +103,9 @@
 
 				qcom,pm-cpu-level@1 { /* C2D */
 					reg = <1>;
-					qcom,psci-cpu-mode = <0x2>;
 					qcom,spm-cpu-mode = "ret";
-					qcom,latency-us = <86>;
+					qcom,psci-cpu-mode = <0x2>;
+					qcom,latency-us = <119>;
 					qcom,ss-power = <449>;
 					qcom,energy-overhead = <78456>;
 					qcom,time-overhead = <167>;
@@ -115,7 +115,7 @@
 					reg = <2>;
 					qcom,spm-cpu-mode = "pc";
 					qcom,psci-cpu-mode = <0x3>;
-					qcom,latency-us = <612>;
+					qcom,latency-us = <461>;
 					qcom,ss-power = <436>;
 					qcom,energy-overhead = <418225>;
 					qcom,time-overhead = <885>;
@@ -127,7 +127,7 @@
 					reg = <3>;
 					qcom,spm-cpu-mode = "rail-pc";
 					qcom,psci-cpu-mode = <0x4>;
-					qcom,latency-us = <700>;
+					qcom,latency-us = <531>;
 					qcom,ss-power = <400>;
 					qcom,energy-overhead = <428225>;
 					qcom,time-overhead = <1000>;
@@ -141,7 +141,7 @@
 				#size-cells = <0>;
 				qcom,psci-mode-shift = <0>;
 				qcom,psci-mode-mask = <0xf>;
-				qcom,cpu = <&CPU4 &CPU5 &CPU6 &CPU7>;
+				qcom,cpu = <&CPU6 &CPU7>;
 
 				qcom,pm-cpu-level@0 { /* C1 */
 					reg = <0>;
@@ -155,9 +155,9 @@
 
 				qcom,pm-cpu-level@1 { /* C2D */
 					reg = <1>;
-					qcom,psci-cpu-mode = <0x2>;
 					qcom,spm-cpu-mode = "ret";
-					qcom,latency-us = <86>;
+					qcom,psci-cpu-mode = <0x2>;
+					qcom,latency-us = <116>;
 					qcom,ss-power = <449>;
 					qcom,energy-overhead = <78456>;
 					qcom,time-overhead = <167>;
@@ -167,7 +167,7 @@
 					reg = <2>;
 					qcom,spm-cpu-mode = "pc";
 					qcom,psci-cpu-mode = <0x3>;
-					qcom,latency-us = <612>;
+					qcom,latency-us = <621>;
 					qcom,ss-power = <436>;
 					qcom,energy-overhead = <418225>;
 					qcom,time-overhead = <885>;
@@ -179,7 +179,7 @@
 					reg = <3>;
 					qcom,spm-cpu-mode = "rail-pc";
 					qcom,psci-cpu-mode = <0x4>;
-					qcom,latency-us = <700>;
+					qcom,latency-us = <1061>;
 					qcom,ss-power = <400>;
 					qcom,energy-overhead = <428225>;
 					qcom,time-overhead = <1000>;
@@ -192,15 +192,7 @@
 
 	qcom,rpm-stats@c300000 {
 		compatible = "qcom,rpm-stats";
-		reg = <0xC300000 0x1000>, <0xC3F0004 0x4>;
+		reg = <0xc300000 0x1000>, <0xc3f0004 0x4>;
 		reg-names = "phys_addr_base", "offset_addr";
-	};
-
-	pdc: interrupt-controller@0xb220000{
-		compatible = "qcom,pdc-sdm845";
-		reg = <0xb220000 0x400>;
-		#interrupt-cells = <3>;
-		interrupt-parent = <&intc>;
-		interrupt-controller;
 	};
 };
