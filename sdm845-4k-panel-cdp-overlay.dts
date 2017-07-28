@@ -12,15 +12,23 @@
 
 
 /dts-v1/;
+/plugin/;
 
-#include "sdm845.dtsi"
+#include <dt-bindings/clock/qcom,gcc-sdm845.h>
+#include <dt-bindings/clock/qcom,camcc-sdm845.h>
+#include <dt-bindings/clock/qcom,dispcc-sdm845.h>
+#include <dt-bindings/clock/qcom,rpmh.h>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+
 #include "sdm845-sde-display.dtsi"
-#include "sdm845-mtp.dtsi"
+#include "sdm845-cdp.dtsi"
+#include "sdm845-cdp-audio-overlay.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. sdm845 4K Display Panel MTP";
-	compatible = "qcom,sdm845-mtp", "qcom,sdm845", "qcom,mtp";
-	qcom,board-id = <8 1>;
+	model = "Qualcomm Technologies, Inc. sdm845 4K Display Panel CDP";
+	compatible = "qcom,sdm845-cdp", "qcom,sdm845", "qcom,cdp";
+	qcom,msm-id = <321 0x0>;
+	qcom,board-id = <1 1>;
 };
 
 &dsi_nt35597_truly_dsc_cmd_display {
@@ -28,7 +36,7 @@
 };
 
 &mdss_mdp {
-	connectors = <&sde_rscc &sde_wb &sde_dp>;
+	connectors = <&sde_rscc &sde_wb>;
 };
 
 &dsi_sharp_4k_dsc_video {
