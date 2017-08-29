@@ -20,12 +20,11 @@
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 
 #include "sdm845-sde-display.dtsi"
-#include "sdm845-mtp.dtsi"
-#include "sdm845-audio-overlay.dtsi"
+#include "sdm845-interposer-sdm670-cdp.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. SDM845 v1 MTP";
-	compatible = "qcom,sdm845-mtp", "qcom,sdm845", "qcom,mtp";
-	qcom,msm-id = <321 0x10000>;
-	qcom,board-id = <8 0>;
+	model = "Qualcomm Technologies, Inc. SDM845 v1 Interposer SDM670 CDP";
+	compatible = "qcom,sdm845-cdp", "qcom,sdm845", "qcom,cdp";
+	qcom,msm-id = <321 0x0>;
+	qcom,board-id = <1 4>;
 };
