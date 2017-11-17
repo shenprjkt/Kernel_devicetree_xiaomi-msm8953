@@ -25,9 +25,9 @@
 #include "sdm845-qrd-audio-overlay.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. sdm845 4K Display Panel QRD";
-	compatible = "qcom,sdm845-qrd", "qcom,sdm845", "qcom,qrd";
-	qcom,msm-id = <321 0x10000>;
+	model = "Qualcomm Technologies, Inc. sda845 v2.1 4K Display Panel QRD";
+	compatible = "qcom,sda845-qrd", "qcom,sda845", "qcom,qrd";
+	qcom,msm-id = <341 0x20001>;
 	qcom,board-id = <11 1>;
 };
 
@@ -61,8 +61,4 @@
 
 &dsi_sharp_4k_dsc_video_display {
 	qcom,dsi-display-active;
-};
-
-&mdss_mdp {
-	connectors = <&sde_rscc &sde_wb &sde_dp>;
 };
