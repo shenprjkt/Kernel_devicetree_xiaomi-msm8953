@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2017, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -11,6 +10,7 @@
  * GNU General Public License for more details.
  */
 
+
 /dts-v1/;
 /plugin/;
 
@@ -20,15 +20,13 @@
 #include <dt-bindings/clock/qcom,rpmh.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 
-#include "sdm670-cdp.dtsi"
-#include "sdm670-audio-overlay.dtsi"
+#include "sdm845-sde-display.dtsi"
+#include "sdm845-mtp.dtsi"
+#include "sdm845-audio-overlay.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. QCS605 PM660 + PM660L CDP";
-	compatible = "qcom,qcs605-cdp", "qcom,qcs605", "qcom,cdp";
-	qcom,msm-id = <347 0x0>;
-	qcom,board-id = <1 0>;
-	qcom,pmic-id = <0x0001001b 0x0101011a 0x0 0x0>,
-		       <0x0001001b 0x0102001a 0x0 0x0>,
-		       <0x0001001b 0x0201011a 0x0 0x0>;
+	model = "Qualcomm Technologies, Inc. sda845 v2.1 MTP";
+	compatible = "qcom,sda845-mtp", "qcom,sda845", "qcom,mtp";
+	qcom,msm-id = <341 0x20001>;
+	qcom,board-id = <8 0>;
 };
