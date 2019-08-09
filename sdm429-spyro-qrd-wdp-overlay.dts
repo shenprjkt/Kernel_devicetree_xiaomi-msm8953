@@ -11,40 +11,31 @@
  * GNU General Public License for more details.
  */
 
-&tlmm {
-	cam_sensor_rear4_active: cam_sensor_rear4_active {
-		/* RESET */
-		mux {
-			pins = "gpio11";
-			function = "gpio";
-		};
+/dts-v1/;
+/plugin/;
 
-		config {
-			pins = "gpio11";
-			bias-disable; /* No PULL */
-			drive-strength = <2>; /* 2 MA */
-		};
-	};
+#include "sdm429-spyro-qrd-evt.dtsi"
 
-	cam_sensor_rear4_suspend: cam_sensor_rear4_suspend {
-		/* RESET */
-		mux {
-			pins = "gpio11";
-			function = "gpio";
-		};
-
-		config {
-			pins = "gpio11";
-			bias-pull-down; /* PULL DOWN */
-			drive-strength = <2>; /* 2 MA */
-			output-low;
-		};
-	};
-
+/ {
+	model = "Qualcomm Technologies, Inc. SDM429 QRD Spyro WDP Overlay";
+	compatible = "qcom,sdm429w-qrd", "qcom,sdm429w", "qcom,qrd";
+	qcom,msm-id = <416 0x0>;
+	qcom,board-id = <0x01000b 6>;
+	qcom,pmic-id = <0x0002001b 0x0 0x0 0x0>;
 };
 
-&soc {
-	qcom,qbt1000 {
-		status = "disabled";
-	};
+&usb_otg {
+	HSUSB_3p3-supply = <&L16A>;
+};
+
+&msm_dig_codec {
+	cdc-vdd-digital-supply = <&pm660_l11>;
+};
+
+&ext_smart_pa {
+	dvdd-supply = <&pm660_l11>;
+};
+
+&sdhc_2 {
+	cd-gpios = <&tlmm 67 0x1>;
 };
