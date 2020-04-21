@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2019 - 2020, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2016,2018, 2020, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -13,14 +12,13 @@
 
 /dts-v1/;
 
-#include "sdm429-spyro.dtsi"
-#include "sdm429w-bg-pm660.dtsi"
-#include "sdm429-bg-memory.dtsi"
+#include "msm8909-mtp.dtsi"
+#include "msm8909-pm8909.dtsi"
+#include "msm8909-pm8909-mtp.dtsi"
+#include "msm8909-mtp_qseev4.dtsi"
 
 / {
-	model = "Qualcomm Technologies, Inc. SDM429 BG WDP";
-	compatible = "qcom,sdm429w-qrd", "qcom,sdm429w", "qcom,qrd";
-	qcom,msm-id = <416 0x0>;
-	qcom,board-id = <0x00010b 9>;
-	qcom,pmic-id = <0x0002001b 0x0 0x0 0x0>;
+	model = "Qualcomm Technologies, Inc. MSM8909-PM8909 1GB MTP";
+	compatible = "qcom,msm8909-mtp", "qcom,msm8909", "qcom,mtp";
+	qcom,board-id= <8 0>;
 };
