@@ -1,4 +1,4 @@
-/* Copyright (c) 2019-2021, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -11,14 +11,110 @@
  */
 
 #include <dt-bindings/gpio/gpio.h>
-#include "sxr1130-svr-pinctrl-overlay.dtsi"
+#include "sxr1130-arglass-pinctrl-overlay.dtsi"
 #include "sdm670-pmic-overlay.dtsi"
 #include "sdm670-sde-display.dtsi"
-#include "sdm670-camera-sensor-svr.dtsi"
+#include "sdm670-camera-sensor-arglass.dtsi"
 #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
 
 &qupv3_se10_i2c {
 #include "smb1355.dtsi"
+};
+
+&tlmm {
+	mag_rst_gpio_default: mag_rst_gpio_default {
+		mux {
+			pins = "gpio116";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio116";
+			drive-streangth = <8>;
+			bias-disable = <0>;
+			output-high;
+		};
+	};
+
+	mag_rst_gpio_sleep: mag_rst_gpio_sleep {
+		mux {
+			pins = "gpio116";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio116";
+			drive-streangth = <8>;
+			bias-pull-down;
+			input-enable;
+		};
+	};
+
+	arglass_psp_gpio: arglass_psp_gpio {
+		mux {
+			pins = "gpio78";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio78";
+			bias-disable;
+			input-enable;
+		};
+	};
+
+	arglass_pv_gpio: arglass_pv_gpio {
+		mux {
+			pins = "gpio77";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio77";
+			bias-pull-down;
+			drive-strength = <16>;
+		};
+	};
+
+	arglass_nv_gpio: arglass_nv_gpio {
+		mux {
+			pins = "gpio76";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio76";
+			bias-pull-down;
+			drive-strength = <16>;
+		};
+	};
+
+	cam_sensor_6dof_vdig_active: cam_sensor_6dof_vdig_active {
+		/* VDIG Shared GPIO */
+		mux {
+			pins = "gpio144";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio144";
+			bias-disable; /* No PULL */
+			drive-strength = <2>; /* 2 MA */
+		};
+	};
+
+	cam_sensor_6dof_vdig_suspend: cam_sensor_6dof_vdig_suspend {
+		/* VDIG Shared GPIO */
+		mux {
+			pins = "gpio144";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio144";
+			bias-pull-down; /* PULL DOWN */
+			drive-strength = <2>; /* 2 MA */
+			output-low;
+		};
+	};
 };
 
 &ufsphy_mem {
@@ -88,25 +184,6 @@
 
 &qupv3_se9_i2c {
 	status = "ok";
-	tusb1064@10 {
-		compatible = "ti,tusb1064";
-		reg = <0x10>;
-		ti,tiusb-dp-3v3-en = <&tlmm 142 0x00>;
-	};
-
-	vxr7200@39 {
-		compatible = "synaptics,vxr7200";
-		reg = <0x39>;
-		qcom,vxr_3v3_en = <&tlmm 138 0x00>;
-		qcom,led-5v-en-gpio = <&tlmm 134 0x00>;
-		qcom,led-driver-en1-gpio = <&tlmm 110 0x00>;
-		qcom,led-driver-en2-gpio = <&tlmm 111 0x00>;
-		qcom,1p8-en-gpio = <&tlmm 2 0x00>;
-		qcom,switch-power-gpio = <&tlmm 112 0x00>;
-		qcom,selab-gpio = <&tlmm 105 0>;/* Low for DP */
-		qcom,oenab-gpio = <&tlmm 106 0>; /*Low for DP */
-		qcom,platform-reset-gpio = <&tlmm 75 0>;
-	};
 };
 
 
@@ -151,22 +228,22 @@
 
 	cd-gpios = <&tlmm 96 0x1>;
 
-	status = "ok";
+	status = "disabled";
 };
 
 &vendor {
-	svr_batterydata: qcom,battery-data {
+	ar_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <15>;
-		#include "fg-gen3-batterydata-goertek-1400mah.dtsi"
+		#include "fg-gen3-batterydata-goertek-merlin-230mah.dtsi"
 	};
 };
 
 &pm660_fg {
-	qcom,battery-data = <&svr_batterydata>;
+	qcom,battery-data = <&ar_batterydata>;
 };
 
 &pm660_charger {
-	qcom,battery-data = <&svr_batterydata>;
+	qcom,battery-data = <&ar_batterydata>;
 };
 
 &tlmm {
@@ -215,48 +292,14 @@
 };
 
 &soc {
-	gpio_keys {
-		compatible = "gpio-keys";
-		label = "gpio-keys";
-
-		pinctrl-names = "default";
-		pinctrl-0 = <&key_home_default
-			     &key_cam_focus_default
-			     &key_vol_up_default>;
-
-		home {
-			label = "home"; /* BACK Key*/
-			gpios = <&pm660l_gpios 5 GPIO_ACTIVE_LOW>;
-			linux,input-type = <1>;
-			linux,code = <158>;
-			gpio-key,wakeup;
-			debounce-interval = <15>;
-			linux,can-disable;
-		};
-
-		cam_focus {
-			label = "cam_focus";
-			gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
-			linux,input-type = <1>;
-			linux,code = <528>;
-			gpio-key,wakeup;
-			debounce-interval = <15>;
-			linux,can-disable;
-		};
-
-		vol_up {
-			label = "volume_up";
-			gpios = <&pm660l_gpios 7 GPIO_ACTIVE_LOW>;
-			linux,input-type = <1>;
-			linux,code = <115>;
-			gpio-key,wakeup;
-			debounce-interval = <15>;
-			linux,can-disable;
-		};
-	};
-
 	qcom,xr-smrtvwr-misc {
 		compatible = "qcom,xr-smrtvwr-misc";
+		/* Manetometer gpio */
+		mag_rst_gpio = <&tlmm 116 0>;
+		enable-active-high;
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&mag_rst_gpio_default>;
+		pinctrl-1 = <&mag_rst_gpio_sleep>;
 	};
 
 	rpmh-regulator-ldoa14 {
@@ -264,27 +307,29 @@
 			qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
 		};
 	};
-
-	quat_mi2s_gpios: quat_mi2s_pinctrl {
-		status = "ok";
-		compatible = "qcom,msm-cdc-pinctrl";
-		pinctrl-names = "aud_active", "aud_sleep";
-		pinctrl-0 = <&quat_mi2s_sck_active
-				 &quat_mi2s_ws_active
-				 &quat_mi2s_d0_active>;
-		pinctrl-1 = <&quat_mi2s_sck_sleep
-				 &quat_mi2s_ws_sleep
-				 &quat_mi2s_d0_sleep>;
-		qcom,lpi-gpios;
-	};
-
 };
 
-
+&dsi_dual_arglass_boe_dual_1080p_video {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,mdss-dsi-bl-min-level = <1>;
+	qcom,mdss-dsi-bl-max-level = <255>;
+	/*Restricting max brightness to 127 */
+	qcom,mdss-brightness-max-level = <255>;
+	qcom,mdss-dsi-mode-sel-gpio-state = "dual_port";
+	qcom,platform-reset-gpio = <&tlmm 77 0>;
+	qcom,1p8-en-gpio = <&tlmm 76 0>; /*AVDD GPIO */
+	qcom,switch-power-gpio = <&tlmm 75 20>; /* AVEE GPIO */
+	qcom,led-5v-en-gpio = <&tlmm 134 0>;
+	qcom,selab-gpio = <&tlmm 105 0>;/* High for DSI */
+	qcom,oenab-gpio = <&tlmm 106 0>; /*Low for DSI */
+	qcom,led-driver-en1-gpio = <&tlmm 110 0>;
+	qcom,led-driver-en2-gpio = <&tlmm 111 0>;
+};
 
 &dsi_dual_xrsmrtvwr_jdi_video {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
 	qcom,mdss-dsi-bl-min-level = <1>;
 	qcom,mdss-dsi-bl-max-level = <4095>;
 	qcom,mdss-dsi-mode-sel-gpio-state = "dual_port";
@@ -344,7 +389,7 @@
 
 &dsi_sim_vid {
 	qcom,panel-supply-entries = <&dsi_panel_pwr_supply>;
-	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_wled";
 	qcom,platform-reset-gpio = <&tlmm 90 0>;
 };
 
@@ -436,6 +481,7 @@
 
 &pm660l_wled {
 	status = "disabled";
+	qcom,led-strings-list = [01 02];
 };
 
 &mdss_mdp {
@@ -448,96 +494,35 @@
 	};
 };
 
-&tavil_snd {
-	qcom,msm-mi2s-master = <1>, <1>, <1>, <0>, <1>;
-	qcom,audio-routing =
-		"AIF4 VI", "MCLK",
-		"RX_BIAS", "MCLK",
-		"MADINPUT", "MCLK",
-		"hifi amp", "LINEOUT1",
-		"hifi amp", "LINEOUT2",
-		"AMIC2", "MIC BIAS2",
-		"MIC BIAS2", "Headset Mic",
-		"AMIC3", "MIC BIAS2",
-		"MIC BIAS2", "ANCRight Headset Mic",
-		"AMIC4", "MIC BIAS2",
-		"MIC BIAS2", "ANCLeft Headset Mic",
-		"AMIC5", "MIC BIAS3",
-		"MIC BIAS3", "Handset Mic",
-		"DMIC0", "MIC BIAS1",
-		"MIC BIAS1", "Digital Mic0",
-		"DMIC1", "MIC BIAS1",
-		"MIC BIAS1", "Digital Mic1",
-		"DMIC2", "MIC BIAS4",
-		"MIC BIAS4", "Digital Mic2",
-		"DMIC3", "MIC BIAS4",
-		"MIC BIAS4", "Digital Mic3",
-		"DMIC4", "MIC BIAS3",
-		"MIC BIAS3", "Digital Mic4",
-		"DMIC5", "MIC BIAS3",
-		"MIC BIAS3", "Digital Mic5",
-		"SpkrLeft IN", "SPK1 OUT",
-		"SpkrRight IN", "SPK2 OUT";
-
-	qcom,quat-mi2s-gpios = <&quat_mi2s_gpios>;
-	qcom,msm-mbhc-hphl-swh = <1>;
-	qcom,msm-mbhc-gnd-swh = <1>;
-	qcom,hph-en0-gpio = <&tavil_hph_en0>;
-	qcom,hph-en1-gpio = <&tavil_hph_en1>;
-	qcom,msm-mclk-freq = <9600000>;
-	asoc-codec = <&stub_codec>, <&ext_disp_audio_codec>;
-	asoc-codec-names = "msm-stub-codec.1", "msm-ext-disp-audio-codec-rx";
-	qcom,wsa-max-devs = <2>;
-	qcom,wsa-devs = <&wsa881x_0211>, <&wsa881x_0212>,
-		<&wsa881x_0213>, <&wsa881x_0214>;
-	qcom,wsa-aux-dev-prefix = "SpkrLeft", "SpkrRight",
-		"SpkrLeft", "SpkrRight";
-};
-
-&wcd_rst_gpio {
-	status = "ok";
-	pinctrl-0 = <&cdc_xr_reset_active>;
-	pinctrl-1 = <&cdc_xr_reset_sleep>;
-};
-
-&dsi_dual_xrsmrtvwr_jdi_video_display {
+&dsi_dual_arglass_boe_dual_1080p_video_display {
 	qcom,dsi-display-active;
 };
 
 &pm660_charger {
 	qcom,ufp-only-mode;
-};
-
-&dai_mi2s3 {
-	qcom,msm-mi2s-rx-lines = <0>;
-	qcom,msm-mi2s-tx-lines = <1>;
-
-};
-
-&cdc_pdm_gpios {
-	status = "disabled";
-};
-
-&lcdb_ldo_vreg {
-	regulator-min-microvolt = <5700000>;
-	regulator-max-microvolt = <5700000>;
-};
-
-&lcdb_ncp_vreg {
-	regulator-min-microvolt = <5700000>;
-	regulator-max-microvolt = <5700000>;
+	qcom,shutdown-enable;
 };
 
 &pm660_pdphy {
 	qcom,sxr1130-sxr-dp-sink;
 };
 
-/*Adding delays so that display power settles down properly*/
+&bluetooth {
+	qca,bt-disable;
+};
+
+&icnss {
+	qcom,icnss-disable;
+};
+
+&usb0 {
+	qcom,shutdown-enable;
+};
+
 &mdss_dsi_phy0 {
 	qcom,phy-supply-entries {
 		qcom,phy-supply-entry@0 {
-			qcom,supply-pre-on-sleep = <40>;
-			qcom,supply-post-on-sleep = <40>;
+			qcom,supply-post-on-sleep = <20>;
 		};
 	};
 };
@@ -545,8 +530,7 @@
 &mdss_dsi_phy1 {
 	qcom,phy-supply-entries {
 		qcom,phy-supply-entry@0 {
-			qcom,supply-pre-on-sleep = <40>;
-			qcom,supply-post-on-sleep = <40>;
+			qcom,supply-post-on-sleep = <20>;
 		};
 	};
 };
