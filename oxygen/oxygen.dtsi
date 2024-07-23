@@ -1,5 +1,3 @@
-#include "remove.dtsi"
-
 #include "pinctrl.dtsi"
 #include "msm8953-oxygen-pinctrl.dtsi"
 
