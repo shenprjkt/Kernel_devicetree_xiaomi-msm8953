@@ -45,7 +45,6 @@
 	};
 };
 &i2c_2 {
-	status = "okay";
 	/delete-node/ adv7533@39;
 };
 &soc {
