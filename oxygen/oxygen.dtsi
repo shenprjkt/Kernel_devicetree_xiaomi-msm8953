@@ -7,6 +7,5 @@
 #include "battery.dtsi"
 #include "display.dtsi"
 #include "misc.dtsi"
-#include "ramoops.dtsi"
 #include "power.dtsi"
 #include "soc.dtsi"
